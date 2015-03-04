@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/JMP_OSGI.iml" filepath="$PROJECT_DIR$/JMP_OSGI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/console_impl_fragment/console_impl_fragment.iml" filepath="$PROJECT_DIR$/console_impl_fragment/console_impl_fragment.iml" />
+      <module fileurl="file://$PROJECT_DIR$/file_impl_bundle/file_impl_bundle.iml" filepath="$PROJECT_DIR$/file_impl_bundle/file_impl_bundle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/iface_bundle/iface_bundle.iml" filepath="$PROJECT_DIR$/iface_bundle/iface_bundle.iml" />
+    </modules>
+  </component>
+</project>
+

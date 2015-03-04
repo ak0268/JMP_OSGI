@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="EntryPointsManager">
+    <entry_points version="2.0" />
+  </component>
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="Osmorc" url="file://$PROJECT_DIR$/console_impl_fragment" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/file_impl_bundle" />
+    <file type="Osmorc" url="file://$PROJECT_DIR$/iface_bundle" />
+  </component>
+  <component name="IdProvider" IDEtalkID="8244ED4DE9A2035D9A9649B74464251A" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/file_impl_bundle/pom.xml" />
+        <option value="$PROJECT_DIR$/console_impl_fragment/pom.xml" />
+        <option value="$PROJECT_DIR$/iface_bundle/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="Osmorc">
+    <option name="bundlesOutputPath" value="$PROJECT_DIR$/out/bundles" />
+    <option name="frameworkInstanceName" value="Felix" />
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>
+

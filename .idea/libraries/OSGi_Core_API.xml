@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="OSGi Core API">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/apache-felix-plugin-1.3.4.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
