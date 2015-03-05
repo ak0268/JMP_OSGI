@@ -11,11 +11,12 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.ComponentContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 
 @Component(name="Settings Component", description="Component provides functionality of setting logging timeout and logging executor", metatype=true, immediate = true)
-@Service(value = {SettingsComponent.class})
 public class SettingsComponent implements Job {
 
     public static final String CONSOLE_IMPL = "CONSOLE";
@@ -33,15 +34,15 @@ public class SettingsComponent implements Job {
     @Property(label = "Scheduling period")
     private static final String LOGGING_PERIOD = "scheduler.period";
 
+    private static final String SCHEDULER_TIMEOUT = "0/%s * * * * ?";
+    private static final String SERVICE_REFERENCE_FILTER = "(logging.target=%s)";
+
     @Reference
     private Scheduler scheduler;
 
     private ILoggable logger;
 
-    @Activate
-    private void activate(ComponentContext context) {
-        updateLoggingState(context);
-    }
+    private Logger slf4jLogger = LoggerFactory.getLogger(SettingsComponent.class);
 
     @Override
     public void execute(JobContext jobContext) {
@@ -50,15 +51,16 @@ public class SettingsComponent implements Job {
         }
     }
 
+    @Activate
     @Modified
     private void updateLoggingState(ComponentContext context) {
         String schedulerPeriod = PropertiesUtil.toString(context.getProperties().get(LOGGING_PERIOD), "5");
-        String period = "0/" + schedulerPeriod + " * * * * ?";
+        String period = String.format(SCHEDULER_TIMEOUT, schedulerPeriod);
         String implementationConfigName = PropertiesUtil.toString(context.getProperties().get(EXECUTOR_NAME), CONSOLE_IMPL);
 
         BundleContext bundleContext = context.getBundleContext();
         try {
-            ServiceReference[] serviceReferences = bundleContext.getServiceReferences(ILoggable.class.getName(), "(logging.target="+ implementationConfigName.toLowerCase() +")");
+            ServiceReference[] serviceReferences = bundleContext.getServiceReferences(ILoggable.class.getName(), String.format(SERVICE_REFERENCE_FILTER, implementationConfigName.toLowerCase()));
             if (serviceReferences != null && serviceReferences.length > 0) {
                 ServiceReference serviceReference = serviceReferences[0];
                 if (serviceReference != null) {
@@ -66,20 +68,20 @@ public class SettingsComponent implements Job {
                 }
             }
         } catch (InvalidSyntaxException e) {
-            e.printStackTrace();
+            slf4jLogger.error("Error getting ILoggable services from Felix context");
         }
 
-        deactivate();
+        stopScheduler();
 
         try {
             scheduler.addJob(JOB_NAME, this, null, period, false);
         } catch (Exception e) {
-            System.out.println("Job component activation error");
+            slf4jLogger.error("Job component activation error");
         }
     }
 
     @Deactivate
-    private void deactivate() {
+    private void stopScheduler() {
         scheduler.removeJob(JOB_NAME);
     }
 }
